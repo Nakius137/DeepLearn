@@ -1,0 +1,79 @@
+@keyframes HoverIn {
+  from {
+    border-radius: 0px;
+  }
+  to {
+    border-radius: 10px;
+  }
+}
+@keyframes HoverOut {
+  from {
+    border-radius: 10px;
+  }
+  to {
+    border-radius: 0px;
+  }
+}
+body {
+  background-color: #00684a;
+}
+
+.loginContainer {
+  background-color: #42494f;
+  border-radius: 16px;
+  color: white;
+  text-align: center;
+  width: 20rem;
+  height: 5rem;
+  margin: auto;
+  position: absolute;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+.email {
+  min-height: 34px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.email > input {
+  width: 8rem;
+  height: 1.5rem;
+  animation: HoverOut 0.5;
+}
+.email > input:hover {
+  animation: HoverIn 0.5s forwards;
+}
+
+.email > input:focus {
+  outline: none;
+  animation: HoverIn 0.5 forwards;
+}
+
+.password {
+  min-height: 34px;
+  padding-top: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.password > input {
+  width: 8rem;
+  height: 1.5rem;
+}
+
+.password > input:hover {
+  animation: HoverIn 0.5s;
+  animation-fill-mode: forwards;
+}
+.password > input:focus {
+  animation: HoverIn 0.5s;
+  animation-fill-mode: forwards;
+  outline: none;
+}
