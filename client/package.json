@@ -9,12 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.3",
+    "dotenv": "^16.0.3",
+    "graphql": "^16.6.0",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.4.4",
     "react-router-dom": "^6.4.4"
   },
   "devDependencies": {
+    "@types/node": "^18.11.17",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@types/react-router-dom": "^5.3.3",

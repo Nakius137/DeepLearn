@@ -1,7 +1,31 @@
 import { useNavigate } from "react-router";
 import "../styles/Main.css";
+import { useQuery, gql } from "@apollo/client";
+import { LOAD_USERS } from "../GraphQL/Queries";
+import { useEffect } from "react";
+
 const Main = () => {
   const navigate = useNavigate();
+  const { data } = useQuery(LOAD_USERS);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+  // import React, { useEffect } from "react";
+  // import { useQuery, gql } from "@apollo/client";
+  // import { LOAD_USERS } from "../GraphQL/Queries";
+
+  // const GetUser = () => {
+  //   const { data } = useQuery(LOAD_USERS);
+
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
+
+  //   return 1;
+  // };
+
+  // export default GetUser;
 
   return (
     <>
