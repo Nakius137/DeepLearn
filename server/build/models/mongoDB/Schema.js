@@ -6,7 +6,8 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         unique: true,
     },
-    password: String,
+    hashedPassword: String,
+    token: String,
 });
 const User = (0, mongoose_1.model)("User", userSchema);
 exports.default = User;

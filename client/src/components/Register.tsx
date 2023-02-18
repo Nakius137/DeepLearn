@@ -1,19 +1,32 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import { ReactNode, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ADD_USER } from "../GraphQL/Mutations";
-
+import "../styles/Register.css";
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [createUser] = useMutation(ADD_USER);
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = formState;
+  const navigate = useNavigate();
+  const [createUser] = useMutation(ADD_USER, {
+    update() {
+      navigate("/panel");
+    },
+  });
 
-  const SendData = (email: string, password: string) => {
-    createUser({
-      variables: {
-        email: email,
-        password: password,
-      },
-    });
+  const sendNewUser = (email: string, password: string) => {
+    if (email && password) {
+      createUser({
+        variables: {
+          email: email,
+          password: password,
+        },
+      });
+    } else {
+      alert("Input error");
+    }
   };
 
   return (
@@ -23,23 +36,28 @@ const Register = () => {
           <label>Email</label>
           <input
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setFormState({ ...formState, email: e.target.value })
+            }
             type="text"
-            placeholder="4324.smith@gmail.com"
+            placeholder="j.smith@gmail.com"
           ></input>
         </div>
         <div className="password">
           <label>Password</label>
           <input
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setFormState({ ...formState, password: e.target.value })
+            }
             type="password"
           ></input>
         </div>
 
         <button
+          className="inputButton"
           onClick={() => {
-            SendData(email, password);
+            sendNewUser(email, password);
           }}
         >
           Send

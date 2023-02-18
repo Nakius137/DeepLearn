@@ -4,7 +4,7 @@ export const LOAD_USERS = gql`
   query {
     user {
       email
-      password
+      hashedPassword
     }
   }
 `;

@@ -18,6 +18,8 @@ const main = async () => {
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    //@ts-ignore
+    context: ({ req, res }: any) => ({ req, res }),
   });
 
   createConnection();

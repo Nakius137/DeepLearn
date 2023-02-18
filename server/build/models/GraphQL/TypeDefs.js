@@ -8,11 +8,13 @@ const typeDefs = (0, apollo_server_express_1.gql) `
 
   type Mutation {
     createUser(email: String!, password: String!): User
+    loginUser(email: String!, password: String!, checked: Boolean!): User
   }
 
   type User {
     email: String!
-    password: String!
+    hashedPassword: String!
+    token: String!
   }
 `;
 exports.default = typeDefs;

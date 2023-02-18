@@ -44,6 +44,8 @@ const main = async () => {
         typeDefs: TypeDefs_1.default,
         resolvers: Resolvers_1.default,
         plugins: [(0, drainHttpServer_1.ApolloServerPluginDrainHttpServer)({ httpServer })],
+        //@ts-ignore
+        context: ({ req, res }) => ({ req, res }),
     });
     (0, createConnection_1.default)();
     try {
