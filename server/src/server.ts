@@ -1,34 +1,32 @@
-import express, { json } from "express";
-import cors from "cors";
-import { expressMiddleware } from "@apollo/server/express4";
 import * as dotenv from "dotenv";
 import { ApolloServer } from "@apollo/server";
-import typeDefs from "../models/GraphQL/TypeDefs";
+import { readFileSync } from "fs";
 import resolvers from "../models/GraphQL/Resolvers";
 import createConnection from "../models/mongoDB/createConnection";
-import http from "http";
-import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { startStandaloneServer } from "@apollo/server/standalone";
 
 dotenv.config();
 
 const main = async () => {
-  const app = express();
-  const httpServer = http.createServer(app);
+  const typeDefs = readFileSync(
+    "C:\\Users\\nakiu\\Desktop\\Pulpit\\Programowanie\\DeepLearn\\server\\models\\GraphQL\\schema.graphql",
+    {
+      encoding: "utf-8",
+    }
+  );
+
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    //@ts-ignore
-    context: ({ req, res }: any) => ({ req, res }),
   });
 
   createConnection();
 
   try {
-    await server.start();
-    app.use("/graphql", cors(), json(), expressMiddleware(server, {}));
-    await new Promise(() => httpServer.listen({ port: 4000 }));
-    console.log(`🚀 Server ready at http://localhost:4000/`);
+    const { url } = await startStandaloneServer(server, {
+      listen: { port: 4000 },
+    });
+    console.log(`🚀 Server ready at ${url}`);
   } catch (err) {
     console.log(err);
   }

@@ -26,33 +26,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importStar(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const express4_1 = require("@apollo/server/express4");
 const dotenv = __importStar(require("dotenv"));
 const server_1 = require("@apollo/server");
-const TypeDefs_1 = __importDefault(require("../models/GraphQL/TypeDefs"));
+const fs_1 = require("fs");
 const Resolvers_1 = __importDefault(require("../models/GraphQL/Resolvers"));
 const createConnection_1 = __importDefault(require("../models/mongoDB/createConnection"));
-const http_1 = __importDefault(require("http"));
-const drainHttpServer_1 = require("@apollo/server/plugin/drainHttpServer");
+const standalone_1 = require("@apollo/server/standalone");
 dotenv.config();
 const main = async () => {
-    const app = (0, express_1.default)();
-    const httpServer = http_1.default.createServer(app);
+    const typeDefs = (0, fs_1.readFileSync)("C:\\Users\\nakiu\\Desktop\\Pulpit\\Programowanie\\DeepLearn\\server\\models\\GraphQL\\schema.graphql", {
+        encoding: "utf-8",
+    });
     const server = new server_1.ApolloServer({
-        typeDefs: TypeDefs_1.default,
+        typeDefs,
         resolvers: Resolvers_1.default,
-        plugins: [(0, drainHttpServer_1.ApolloServerPluginDrainHttpServer)({ httpServer })],
-        //@ts-ignore
-        context: ({ req, res }) => ({ req, res }),
     });
     (0, createConnection_1.default)();
     try {
-        await server.start();
-        app.use("/graphql", (0, cors_1.default)(), (0, express_1.json)(), (0, express4_1.expressMiddleware)(server, {}));
-        await new Promise(() => httpServer.listen({ port: 4000 }));
-        console.log(`🚀 Server ready at http://localhost:4000/`);
+        const { url } = await (0, standalone_1.startStandaloneServer)(server, {
+            listen: { port: 4000 },
+        });
+        console.log(`🚀 Server ready at ${url}`);
     }
     catch (err) {
         console.log(err);

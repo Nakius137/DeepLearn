@@ -39,7 +39,6 @@ const resolvers = {
             }
         },
         loginUser: async (_, { email, password, checked }, { res }) => {
-            // tutaj robisz JWT i brcypta
             const user = await Schema_1.default.findOne({ where: { email } });
             if (!user) {
                 throw new apollo_server_express_1.ApolloError("User don't exist");
