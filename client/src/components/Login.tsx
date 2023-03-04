@@ -1,16 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import useAppContext from "../hooks/useAppContext";
 import "../styles/Login.css";
+import SendData from "../utils/SendData";
 
 const Login = () => {
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-    checked: false,
-  });
-  const { email, password, checked } = formState;
-  const navigate = useNavigate();
-
+  const { contextValues, setContextValue } = useAppContext();
+  const { email, password, checked } = contextValues;
   return (
     <>
       <div className="loginContainer">
@@ -19,7 +13,7 @@ const Login = () => {
           <input
             value={email}
             onChange={(e) =>
-              setFormState({ ...formState, email: e.target.value })
+              setContextValue({ ...contextValues, email: e.target.value })
             }
             type="text"
             placeholder="j.smith@gmail.com"
@@ -30,7 +24,7 @@ const Login = () => {
           <input
             value={password}
             onChange={(e) =>
-              setFormState({ ...formState, password: e.target.value })
+              setContextValue({ ...contextValues, password: e.target.value })
             }
             type="password"
           ></input>
@@ -38,14 +32,15 @@ const Login = () => {
         <label>Remember me</label>
         <input
           type="checkbox"
-          onClick={() => setFormState({ ...formState, checked: !checked })}
+          onClick={() =>
+            setContextValue({ ...contextValues, checked: !checked })
+          }
           checked={checked}
         ></input>
         <button
           className="inputButton"
           onClick={() => {
-            // SendData(email, password);
-            navigate("/panel");
+            SendData(email, password, checked);
           }}
         >
           Send

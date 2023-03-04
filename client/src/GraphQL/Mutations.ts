@@ -10,7 +10,8 @@ export const ADD_USER = gql`
 
 export const LOG_USER = gql`
   mutation LogUser($email: String!, $password: String!, $checked: Boolean!) {
-    logUser(email: $email, password: $password, checked: $checked) {
+    loginUser(email: $email, password: $password, checked: $checked) {
+      email
       token
     }
   }

@@ -1,16 +1,8 @@
 import { useNavigate } from "react-router";
 import "../styles/Main.css";
-import { useQuery } from "@apollo/client";
-import { LOAD_USERS } from "../GraphQL/Queries";
-import { useEffect } from "react";
 
 const Main = () => {
   const navigate = useNavigate();
-  const { data } = useQuery(LOAD_USERS);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <>

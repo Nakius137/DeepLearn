@@ -4,18 +4,21 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./index.css";
+import UserProvider from "./context/UserProvider";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://localhost:4000",
   cache: new InMemoryCache(),
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </UserProvider>
     </ApolloProvider>
   </React.StrictMode>
 );

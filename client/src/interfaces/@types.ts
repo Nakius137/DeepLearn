@@ -3,3 +3,4 @@ export interface InputProps {
 }
 
 export type queryFunction = (email: string, password: string) => void;
+
