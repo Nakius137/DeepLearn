@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ADD_USER } from "../GraphQL/Mutations";
 import "../styles/Register.css";
@@ -9,14 +9,16 @@ const Register = () => {
     password: "",
   });
   const { email, password } = formState;
+
   const navigate = useNavigate();
+
   const [createUser] = useMutation(ADD_USER, {
     update() {
       navigate("/panel");
     },
   });
 
-  const sendNewUser = (email: string, password: string) => {
+  const sendNewUser = (email: string, password: string) => { 
     if (email && password) {
       createUser({
         variables: {

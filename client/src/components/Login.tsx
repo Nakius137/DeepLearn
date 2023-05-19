@@ -1,10 +1,36 @@
 import useAppContext from "../hooks/useAppContext";
 import "../styles/Login.css";
-import SendData from "../utils/SendData";
+import { LOG_USER } from "../GraphQL/Mutations";
+import { useMutation } from "@apollo/client";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const { contextValues, setContextValue } = useAppContext();
   const { email, password, checked } = contextValues;
+  const navigate = useNavigate();
+  
+  const [loginUser] = useMutation(LOG_USER, {
+    update() {
+      navigate("/panel");
+    },
+    onCompleted: (data) => {
+      setContextValue({ ...contextValues, token: data });
+    },
+  });
+  const sendData = (email: string, password: string, checked: boolean) => {
+    if (email && password) {
+      loginUser({
+        variables: {
+          email: email,
+          password: password,
+          checked: checked,
+        },
+      });
+    } else {
+      alert("Input error");
+    }
+  };
+
   return (
     <>
       <div className="loginContainer">
@@ -40,7 +66,7 @@ const Login = () => {
         <button
           className="inputButton"
           onClick={() => {
-            SendData(email, password, checked);
+            sendData(email, password, checked);
           }}
         >
           Send
